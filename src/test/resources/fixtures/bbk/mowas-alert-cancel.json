@@ -1,0 +1,17 @@
+{
+  "identifier": "mow.DE-MV-HST-W239-20260917-001",
+  "sender": "DE-MV-HST-W239",
+  "sent": "2026-09-17T15:28:41+02:00",
+  "msgType": "Cancel",
+  "info": [
+    {
+      "language": "de",
+      "category": ["Other"],
+      "event": "Entwarnung",
+      "severity": "Minor",
+      "headline": "Entwarnung: Feuerwehreinsatz - Baabe",
+      "description": "Die Gefahr ist vorüber.",
+      "area": [{"areaDesc": "Baabe"}]
+    }
+  ]
+}
