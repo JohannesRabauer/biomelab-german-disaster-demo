@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>CrisisScope — Operations Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script th:inline="javascript">
+    tailwind.config = { darkMode: 'class' };
+  </script>
+
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+
+  <link th:href="@{/css/app.css}" rel="stylesheet"/>
+</head>
+<body class="dark bg-slate-950 text-slate-100 min-h-screen">
+
+  <!-- Top navigation -->
+  <header class="sticky top-0 z-30 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
+    <div class="mx-auto max-w-[1600px] px-4 lg:px-6 h-16 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="flex items-center justify-center w-9 h-9 rounded-lg bg-sky-500/15 border border-sky-500/30 text-lg">🛰️</div>
+        <div>
+          <p class="font-bold text-slate-50 leading-tight tracking-tight">CrisisScope</p>
+          <p class="text-[11px] text-slate-500 leading-tight">German Disaster Operations</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-1 text-sm">
+        <a href="#" class="px-3 py-1.5 rounded-md bg-slate-800/80 text-slate-100 font-medium">Dashboard</a>
+        <a href="#" class="px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-300 hover:bg-slate-800/50 transition-colors">Providers</a>
+        <a href="#" class="px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-300 hover:bg-slate-800/50 transition-colors">Reports</a>
+        <a href="#" class="px-3 py-1.5 rounded-md text-slate-500 hover:text-slate-300 hover:bg-slate-800/50 transition-colors">Settings</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span class="hidden sm:inline-flex items-center gap-1.5 text-xs text-slate-400 font-mono" id="nav-clock">--:--:--</span>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-medium">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span th:text="${kpis.activeProviders()}">0</span>&nbsp;provider(s) online
+        </span>
+        <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-semibold text-slate-300">OP</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[1600px] px-4 lg:px-6 py-6 space-y-6">
+
+    <!-- KPI cards -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="kpi-cards">
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+        <p class="text-xs text-slate-500 font-medium">Total Events</p>
+        <p class="mt-1.5 text-2xl font-bold text-slate-50" th:text="${kpis.totalEvents()}">0</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+        <p class="text-xs text-slate-500 font-medium">Critical Events</p>
+        <p class="mt-1.5 text-2xl font-bold text-red-400" th:text="${kpis.criticalEvents()}">0</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+        <p class="text-xs text-slate-500 font-medium">Active Regions</p>
+        <p class="mt-1.5 text-2xl font-bold text-slate-50" th:text="${kpis.activeRegions()}">0</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+        <p class="text-xs text-slate-500 font-medium">Data Providers</p>
+        <p class="mt-1.5 text-2xl font-bold text-slate-50" th:text="${kpis.activeProviders()}">0</p>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+      <form id="filter-form"
+            class="flex flex-wrap items-end gap-3"
+            hx-get="/fragments/events"
+            hx-target="#event-feed-list"
+            hx-swap="innerHTML swap:100ms"
+            hx-trigger="change">
+
+        <div class="flex flex-col gap-1">
+          <label for="type" class="text-xs text-slate-500 font-medium">Event Type</label>
+          <select id="type" name="type" class="bg-slate-950 border border-slate-700 rounded-md text-sm px-2.5 py-1.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500/50">
+            <option value="">All types</option>
+            <option th:each="t : ${eventTypes}" th:value="${t.name()}" th:text="${t.label()}">Type</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="severity" class="text-xs text-slate-500 font-medium">Severity</label>
+          <select id="severity" name="severity" class="bg-slate-950 border border-slate-700 rounded-md text-sm px-2.5 py-1.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500/50">
+            <option value="">All severities</option>
+            <option th:each="s : ${severities}" th:value="${s.name()}" th:text="${s.label()}">Severity</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="region" class="text-xs text-slate-500 font-medium">Region</label>
+          <select id="region" name="region" class="bg-slate-950 border border-slate-700 rounded-md text-sm px-2.5 py-1.5 text-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500/50">
+            <option value="">All regions</option>
+            <option th:each="r : ${regions}" th:value="${r}" th:text="${r}">Region</option>
+          </select>
+        </div>
+
+        <button type="button" id="filter-reset"
+                class="px-3 py-1.5 rounded-md text-sm text-slate-400 border border-slate-700 hover:bg-slate-800/60 hover:text-slate-200 transition-colors">
+          Reset
+        </button>
+
+        <div class="ml-auto flex items-center gap-3 text-[11px] text-slate-500">
+          <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full dot-severity-low"></span>Low</span>
+          <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full dot-severity-moderate"></span>Moderate</span>
+          <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full dot-severity-high"></span>High</span>
+          <span class="inline-flex items-center gap-1"><span class="w-2 h-2 rounded-full dot-severity-critical"></span>Critical</span>
+        </div>
+      </form>
+    </section>
+
+    <!-- Map + region detail (left) / event feed (right) -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 space-y-6">
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/60 overflow-hidden">
+          <div class="px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+            <h2 class="text-sm font-semibold text-slate-200">🇩🇪 Germany — Live Situational Map</h2>
+            <span class="text-[11px] text-slate-500">Click a marker for details</span>
+          </div>
+          <div id="map"
+               class="h-[560px] w-full"
+               th:attr="data-center-lat=${mapProperties.centerLatitude},data-center-lng=${mapProperties.centerLongitude},data-zoom=${mapProperties.zoom}">
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+          <h2 class="text-sm font-semibold text-slate-200 mb-3">Regional Detail</h2>
+          <div id="region-detail" th:insert="~{fragments/region-detail :: panel}"></div>
+        </div>
+
+      </div>
+
+      <div class="lg:col-span-1">
+        <div class="rounded-xl border border-slate-800 bg-slate-900/60 flex flex-col h-full max-h-[780px]">
+          <div class="px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+            <h2 class="text-sm font-semibold text-slate-200">Live Event Feed</h2>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400" th:text="${events.size()} + ' shown'">0 shown</span>
+          </div>
+          <div id="event-feed-list" class="p-3 overflow-y-auto scroll-thin flex-1" th:insert="~{fragments/event-feed :: feed}"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="mx-auto max-w-[1600px] px-4 lg:px-6 py-6 text-center text-[11px] text-slate-600">
+    CrisisScope scaffold — sample data shown. Providers are registered automatically via <code class="text-slate-500">CrisisDataProvider</code>.
+  </footer>
+
+  <script th:src="@{/js/dashboard.js}"></script>
+</body>
+</html>
