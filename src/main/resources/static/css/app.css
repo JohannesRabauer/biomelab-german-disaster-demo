@@ -1,0 +1,103 @@
+/* CrisisScope — small, hand-written layer on top of the Tailwind CDN build.
+   Anything expressible as utility classes stays in the templates; this file is
+   only for things utilities can't do (keyframes, scrollbars, map markers). */
+
+:root {
+  --severity-low: #38bdf8;
+  --severity-moderate: #fbbf24;
+  --severity-high: #fb923c;
+  --severity-critical: #f87171;
+}
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Scrollable panels get a slim, dark-friendly scrollbar instead of the
+   default light one, which looks out of place on a dark dashboard. */
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.35);
+  border-radius: 9999px;
+}
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+/* Badges: severity + status dots, shared between the feed, region panel and
+   filter legend so the color coding stays consistent everywhere. */
+.badge-severity-low {
+  color: var(--severity-low);
+  background-color: color-mix(in srgb, var(--severity-low) 16%, transparent);
+  border-color: color-mix(in srgb, var(--severity-low) 40%, transparent);
+}
+.badge-severity-moderate {
+  color: var(--severity-moderate);
+  background-color: color-mix(in srgb, var(--severity-moderate) 16%, transparent);
+  border-color: color-mix(in srgb, var(--severity-moderate) 40%, transparent);
+}
+.badge-severity-high {
+  color: var(--severity-high);
+  background-color: color-mix(in srgb, var(--severity-high) 16%, transparent);
+  border-color: color-mix(in srgb, var(--severity-high) 40%, transparent);
+}
+.badge-severity-critical {
+  color: var(--severity-critical);
+  background-color: color-mix(in srgb, var(--severity-critical) 18%, transparent);
+  border-color: color-mix(in srgb, var(--severity-critical) 45%, transparent);
+}
+
+.dot-severity-low { background-color: var(--severity-low); }
+.dot-severity-moderate { background-color: var(--severity-moderate); }
+.dot-severity-high { background-color: var(--severity-high); }
+.dot-severity-critical { background-color: var(--severity-critical); }
+
+/* Map markers are plain DOM elements (maplibregl.Marker), not part of the
+   WebGL canvas, so they stay crisp regardless of basemap styling. */
+.map-marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  border: 2px solid rgba(15, 23, 42, 0.85);
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.35);
+  cursor: pointer;
+}
+.map-marker.severity-critical {
+  animation: pulse-critical 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-critical {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.35), 0 0 0 0 rgba(248, 113, 113, 0.55); }
+  50% { box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.35), 0 0 0 8px rgba(248, 113, 113, 0); }
+}
+
+.maplibregl-popup-content {
+  background-color: #0f172a;
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  padding: 0.75rem 0.9rem;
+}
+.maplibregl-popup-tip {
+  border-top-color: #0f172a !important;
+  border-bottom-color: #0f172a !important;
+}
+.maplibregl-ctrl-attrib,
+.maplibregl-ctrl-attrib a {
+  background: transparent !important;
+  color: rgba(226, 232, 240, 0.6) !important;
+}
+
+/* Gentle fade-in for HTMX-swapped fragments so filter/region changes don't
+   feel like a jump-cut. */
+.htmx-swapping {
+  opacity: 0;
+  transition: opacity 120ms ease-out;
+}

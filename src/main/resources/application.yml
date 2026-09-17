@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: crisisscope
+  thymeleaf:
+    cache: false
+
+server:
+  port: 8080
+
+crisisscope:
+  map:
+    center-latitude: 51.1657
+    center-longitude: 10.4515
+    zoom: 5.3
+
+logging:
+  level:
+    com.crisisscope: INFO

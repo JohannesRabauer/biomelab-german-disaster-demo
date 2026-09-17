@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <div th:fragment="feed" class="space-y-2">
+    <p th:if="${events.isEmpty()}" class="text-sm text-slate-500 py-6 text-center">
+      No events match the current filters.
+    </p>
+
+    <button type="button"
+            th:each="event : ${events}"
+            th:attr="onclick=|loadRegionDetail('${event.location.region}'); window.crisisMap &amp;&amp; window.crisisMap.flyTo({center:[${event.location.longitude},${event.location.latitude}], zoom:8})|"
+            class="w-full text-left rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800/70 hover:border-slate-700 transition-colors p-3">
+      <div class="flex items-start justify-between gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="text-base leading-none" th:text="${event.type.icon()}">🔥</span>
+          <p class="font-semibold text-sm text-slate-100 truncate" th:text="${event.title}">Event title</p>
+        </div>
+        <span class="event-time shrink-0 text-[11px] text-slate-500 font-mono"
+              th:attr="data-timestamp=${event.occurredAt}">–</span>
+      </div>
+
+      <p class="mt-1 text-xs text-slate-400 line-clamp-2" th:text="${event.description}">Description</p>
+
+      <div class="mt-2 flex flex-wrap items-center gap-1.5">
+        <span th:text="${event.severity.label()}"
+              th:class="'inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] font-medium badge-severity-' + ${event.severity.name().toLowerCase()}">
+          Severity
+        </span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full border border-slate-700 text-[11px] text-slate-400">
+          <span th:text="${event.type.label()}">Type</span>
+        </span>
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-slate-700 text-[11px] text-slate-400">
+          📍 <span th:text="${event.location.region}">Region</span>
+        </span>
+      </div>
+    </button>
+  </div>
+</body>
+</html>

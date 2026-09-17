@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+  <div th:fragment="panel">
+    <div th:if="${region == null}" class="text-sm text-slate-500 py-8 text-center">
+      Select a marker on the map or an item in the feed to see regional detail here.
+    </div>
+
+    <div th:if="${region != null}" class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-semibold text-slate-100">
+          📍 <span th:text="${region}">Region</span>
+        </h3>
+        <span class="text-xs text-slate-500" th:text="${events.size()} + ' event(s)'">0 event(s)</span>
+      </div>
+
+      <p th:if="${events.isEmpty()}" class="text-sm text-slate-500 py-4">
+        No currently tracked events in this region.
+      </p>
+
+      <ul class="space-y-2 max-h-64 overflow-y-auto scroll-thin pr-1">
+        <li th:each="event : ${events}"
+            class="rounded-lg border border-slate-800 bg-slate-900/60 p-2.5">
+          <div class="flex items-start justify-between gap-2">
+            <p class="text-sm font-medium text-slate-100 flex items-center gap-1.5">
+              <span th:text="${event.type.icon()}">🔥</span>
+              <span th:text="${event.title}">Title</span>
+            </p>
+            <span class="event-time shrink-0 text-[11px] text-slate-500 font-mono"
+                  th:attr="data-timestamp=${event.occurredAt}">–</span>
+          </div>
+          <p class="mt-1 text-xs text-slate-400" th:text="${event.location.name}">Location</p>
+          <span th:text="${event.severity.label()}"
+                th:class="'mt-1.5 inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] font-medium badge-severity-' + ${event.severity.name().toLowerCase()}">
+            Severity
+          </span>
+          <a th:if="${event.urlOptional().isPresent()}" th:href="${event.url}" target="_blank" rel="noopener"
+             class="ml-2 text-[11px] text-sky-400 hover:text-sky-300 font-medium">View source ↗</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
