@@ -12,6 +12,9 @@ crisisscope:
     center-latitude: 51.1657
     center-longitude: 10.4515
     zoom: 5.3
+  dwd:
+    warnings-url: https://www.dwd.de/DE/wetter/warnungen_gemeinden/json/warnungen_gemeinde_map.json
+    cache-ttl: PT5M
 
 logging:
   level:

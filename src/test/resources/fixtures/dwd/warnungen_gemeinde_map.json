@@ -1,0 +1,53 @@
+warnWetter.loadWarnings({
+  "warnings": {
+    "807319000": [
+      {
+        "id": 22334455,
+        "level": 3,
+        "type": 3,
+        "start": 1737100800000,
+        "end": 1737122400000,
+        "regionName": "Stadt Dresden",
+        "state": "Sachsen",
+        "stateShort": "SN",
+        "event": "STARKES GEWITTER",
+        "headline": "Amtliche WARNUNG vor STARKEM GEWITTER",
+        "description": "Es treten schwere Gewitter mit Sturmböen und Starkregen auf.",
+        "instruction": "Meiden Sie ungeschützte Aufenthaltsorte im Freien."
+      }
+    ],
+    "807319001": [
+      {
+        "id": 22334455,
+        "level": 3,
+        "type": 3,
+        "start": 1737100800000,
+        "end": 1737122400000,
+        "regionName": "Landkreis Bautzen",
+        "state": "Sachsen",
+        "stateShort": "SN",
+        "event": "STARKES GEWITTER",
+        "headline": "Amtliche WARNUNG vor STARKEM GEWITTER",
+        "description": "Es treten schwere Gewitter mit Sturmböen und Starkregen auf.",
+        "instruction": "Meiden Sie ungeschützte Aufenthaltsorte im Freien."
+      }
+    ],
+    "803159022": [
+      {
+        "id": 99887766,
+        "level": 2,
+        "type": 8,
+        "start": 1737060000000,
+        "end": null,
+        "regionName": "Stadt Köln",
+        "state": "Nordrhein-Westfalen",
+        "stateShort": "NW",
+        "event": "HOCHWASSER",
+        "headline": null,
+        "description": "Der Rhein erreicht die Meldestufe 2 im Bereich Köln.",
+        "instruction": null
+      }
+    ]
+  },
+  "time": 1737100000000
+});
