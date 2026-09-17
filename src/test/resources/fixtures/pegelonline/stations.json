@@ -1,0 +1,110 @@
+[
+  {
+    "uuid": "5edaf9ab-3708-4d43-a260-372d1e46c1bd",
+    "number": "501060",
+    "shortname": "DRESDEN",
+    "longname": "DRESDEN",
+    "km": 55.63,
+    "agency": "WSA ELBE",
+    "longitude": 13.738831,
+    "latitude": 51.055988,
+    "water": {
+      "shortname": "ELBE",
+      "longname": "ELBE"
+    },
+    "timeseries": [
+      {
+        "shortname": "W",
+        "longname": "Wasserstand",
+        "unit": "cm",
+        "currentMeasurement": {
+          "timestamp": "2026-09-17T08:00:00+02:00",
+          "value": 750.0,
+          "stateMnwMhw": "hoch",
+          "stateNswHsw": "hoch"
+        }
+      }
+    ]
+  },
+  {
+    "uuid": "c1c8a1a0-0000-4d43-a260-372d1e46c1bd",
+    "number": "48900237",
+    "shortname": "KOELN",
+    "longname": "KOELN",
+    "km": 688.15,
+    "agency": "WSA RHEIN",
+    "longitude": 6.964,
+    "latitude": 50.9382,
+    "water": {
+      "shortname": "RHEIN",
+      "longname": "RHEIN"
+    },
+    "timeseries": [
+      {
+        "shortname": "W",
+        "longname": "Wasserstand",
+        "unit": "cm",
+        "currentMeasurement": {
+          "timestamp": "2026-09-17T08:15:00+02:00",
+          "value": 620.5,
+          "stateMnwMhw": "hoch",
+          "stateNswHsw": "normal"
+        }
+      }
+    ]
+  },
+  {
+    "uuid": "9b111111-0000-4d43-a260-372d1e46c1bd",
+    "number": "10010000",
+    "shortname": "HAMBURG-STPAULI",
+    "longname": "HAMBURG ST. PAULI",
+    "km": 623.60,
+    "agency": "WSA ELBE-NORDSEE",
+    "longitude": 9.9698,
+    "latitude": 53.5461,
+    "water": {
+      "shortname": "ELBE",
+      "longname": "ELBE"
+    },
+    "timeseries": [
+      {
+        "shortname": "W",
+        "longname": "Wasserstand",
+        "unit": "cm",
+        "currentMeasurement": {
+          "timestamp": "2026-09-17T08:10:00+02:00",
+          "value": 210.0,
+          "stateMnwMhw": "normal",
+          "stateNswHsw": "normal"
+        }
+      }
+    ]
+  },
+  {
+    "uuid": "ab222222-0000-4d43-a260-372d1e46c1bd",
+    "number": "48610030",
+    "shortname": "MAINZ",
+    "longname": "MAINZ",
+    "km": 498.66,
+    "agency": "WSA RHEIN",
+    "longitude": 8.2712,
+    "latitude": 50.0007,
+    "water": {
+      "shortname": "RHEIN",
+      "longname": "RHEIN"
+    },
+    "timeseries": [
+      {
+        "shortname": "Q",
+        "longname": "Durchfluss",
+        "unit": "m3/s",
+        "currentMeasurement": {
+          "timestamp": "2026-09-17T08:00:00+02:00",
+          "value": 1500.0,
+          "stateMnwMhw": "hoch",
+          "stateNswHsw": "hoch"
+        }
+      }
+    ]
+  }
+]

@@ -19,6 +19,9 @@ crisisscope:
     base-url: https://warnung.bund.de/api31
     channels: mowas,katwarn,biwapp
     cache-ttl: PT5M
+  pegelonline:
+    stations-url: https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?includeTimeseries=true&includeCurrentMeasurement=true
+    cache-ttl: PT5M
 
 logging:
   level:
