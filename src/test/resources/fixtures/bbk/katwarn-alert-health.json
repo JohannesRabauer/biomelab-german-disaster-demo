@@ -1,0 +1,18 @@
+{
+  "identifier": "kat.abc123_public_topics",
+  "sender": "CAP@katwarn.de",
+  "sent": "2026-09-14T15:29:25+02:00",
+  "msgType": "Alert",
+  "info": [
+    {
+      "language": "de",
+      "category": ["Health"],
+      "event": "DrinkingWater",
+      "severity": "Moderate",
+      "effective": "2026-09-14T15:29:00+02:00",
+      "headline": "Vogelsbergkreis meldet: Warnung Trinkwasserunfall",
+      "description": "Im Trinkwasser wurde eine Trübung festgestellt.<br/>Bitte abkochen.",
+      "area": [{"areaDesc": "Teile von Lauterbach"}]
+    }
+  ]
+}

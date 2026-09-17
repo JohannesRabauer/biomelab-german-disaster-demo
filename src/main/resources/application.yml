@@ -15,6 +15,10 @@ crisisscope:
   dwd:
     warnings-url: https://www.dwd.de/DE/wetter/warnungen_gemeinden/json/warnungen_gemeinde_map.json
     cache-ttl: PT5M
+  bbk:
+    base-url: https://warnung.bund.de/api31
+    channels: mowas,katwarn,biwapp
+    cache-ttl: PT5M
 
 logging:
   level:

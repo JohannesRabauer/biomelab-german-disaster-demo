@@ -1,0 +1,31 @@
+{
+  "identifier": "mow.DE-SN-DD-W100-20260916-000",
+  "sender": "DE-SN-DD-W100",
+  "sent": "2026-09-16T08:15:00+02:00",
+  "msgType": "Alert",
+  "info": [
+    {
+      "language": "de",
+      "category": ["Met"],
+      "event": "Hochwasser",
+      "severity": "Severe",
+      "effective": "2026-09-16T08:00:00+02:00",
+      "onset": "2026-09-16T08:00:00+02:00",
+      "expires": "2026-09-17T08:00:00+02:00",
+      "headline": "Hochwasserwarnung für die Elbe bei Dresden",
+      "description": "Der Pegel der Elbe hat die Meldestufe 2 überschritten.<br/>Anwohner werden gebeten, wachsam zu sein.",
+      "instruction": "Meiden Sie den Aufenthalt in der Nähe des Ufers.",
+      "web": "https://www.pegelonline.wsv.de/",
+      "area": [{"areaDesc": "Dresden, Elbtal"}]
+    },
+    {
+      "language": "en",
+      "category": ["Met"],
+      "event": "Flood",
+      "severity": "Severe",
+      "headline": "Flood warning for the Elbe near Dresden",
+      "description": "Flood warning.",
+      "area": [{"areaDesc": "Dresden"}]
+    }
+  ]
+}
